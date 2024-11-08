@@ -1,0 +1,271 @@
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #222; /* Dark background */
+  color: white;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Welcome Page Styles */
+.home-container {
+  text-align: center;
+  padding: 50px;
+  background-color: #2f2f2f; /* Dark green-black mix */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+  color: #a8d08d; /* Light green color for title */
+  font-size: 3em;
+}
+
+h2 {
+  color: #a8d08d;
+  font-size: 2em;
+}
+
+button.list-services-btn {
+  background-color: #3a9e6e; /* Green background for button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+button.list-services-btn:hover {
+  background-color: #7bbf9a; /* Hover state lightens the button color */
+}
+
+/* Service List Styles */
+.services-container {
+  padding: 2em;
+  text-align: center; /* Center the text */
+}
+
+.service-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap; /* Makes the cards stack on smaller screens */
+}
+
+.service-card {
+  background-color: #333;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.service-card h3 {
+  font-size: 1.5em;
+}
+
+.service-card p {
+  font-size: 1em;
+}
+
+.service-card button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #3a9e6e;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.service-card button:hover {
+  background-color: #7bbf9a;
+}
+
+.service-card .button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.service-card .button-container button {
+  width: 45%;
+}
+
+/* About Page Styles */
+.about-container {
+  padding: 2em;
+  background-color: #2f2f2f;
+  text-align: center; /* Center the text */
+}
+
+.about-container h2 {
+  font-size: 2.5em;
+  color: #a8d08d;
+}
+
+.about-container p {
+  font-size: 1.2em;
+  color: #e6e6e6;
+}
+
+/* Credentials Page Styles */
+.credentials-container {
+  padding: 2em;
+  background-color: #2f2f2f;
+  text-align: center; /* Center the text */
+}
+
+.credentials-container h2 {
+  font-size: 2.5em;
+  color: #a8d08d;
+}
+
+table {
+  width: 100%;
+  margin-top: 2em;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.8em;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #3b3b3b;
+}
+
+button.generate-credentials-btn {
+  padding: 0.8em 1.5em;
+  background-color: #3a9e6e;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+button.generate-credentials-btn:hover {
+  background-color: #7bbf9a;
+}
+
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #222; /* Dark background */
+  color: white;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Welcome Page Styles */
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  background-color: #222; /* Dark green-black mix */
+  border-radius: 10px;
+  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6); */
+  max-width: 500px; /* To keep content centered and readable */
+}
+
+/* Welcome Page Styles */
+.welcome-page {
+  text-align: center;
+  padding: 50px 0; /* Adds space above and below without a box effect */
+  color: white;
+}
+
+.welcome-page h1 {
+  color: #a8d08d; /* Light green color for title */
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.welcome-page p {
+  font-size: 1.2em;
+  color: #e6e6e6;
+}
+
+.list-services-btn {
+  background-color: #3a9e6e; /* Green background for button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.list-services-btn:hover {
+  background-color: #7bbf9a; /* Hover state lightens the button color */
+}
+
+.credentials-page {
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+
+.credentials-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  background-color: #2f2f2f;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.credentials-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #3b3b3b;
+}
+
+.credentials-label {
+  font-weight: bold;
+  color: #a8d08d;
+  width: 30%;
+}
+
+.credentials-value {
+  color: #e6e6e6;
+  width: 70%;
+  word-break: break-word; /* Wrap long text */
+}
+
+.generate-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #3a9e6e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.generate-btn:hover {
+  background-color: #7bbf9a;
+}
