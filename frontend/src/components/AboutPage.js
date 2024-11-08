@@ -8,7 +8,7 @@ const AboutPage = () => {
 
   return (
     <div className="about-page">
-      <h2>About {service}</h2>
+      <h2>ABOUT {service}</h2>
       <p>This is a placeholder for {service} information. Add details here.</p>
     </div>
   );
