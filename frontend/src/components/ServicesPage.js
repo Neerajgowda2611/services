@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';  // Import Link for navigation
-import '/home/silent/Desktop/services/frontend/src/App.css'; // Ensure CSS is imported
-import AboutPage from './AboutPage';
+import '/home/silent/Desktop/services/frontend/src/App.css';
 import CredentialsPage from './CredentialsPage';
+import AboutPage from './AboutPage';
 
 function ServicePage() {
   const services = [
@@ -15,6 +15,7 @@ function ServicePage() {
     { name: 'Service7', description: 'Service 7 Description', id: 7 },
     { name: 'Service8', description: 'Service 8 Description', id: 8 },
     { name: 'Service9', description: 'Service 9 Description', id: 9 },
+    // { name: 'Service10', description: 'Service 9 Description', id: 10 },
   ];
 
   return (
