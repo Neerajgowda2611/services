@@ -4,6 +4,8 @@ import WelcomePage from './components/WelcomePage';
 import ServicesPage from './components/ServicesPage';
 import AboutPage from './components/AboutPage';
 import CredentialsPage from './components/CredentialsPage';
+import Callback from './components/callback';
+// import OAuthHandler from './components/OauthHandler';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/service" element={<ServicesPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/credentials" element={<CredentialsPage />} />
+        <Route path="/callback" element={<Callback/>} />
+      
       </Routes>
     </Router>
   );
