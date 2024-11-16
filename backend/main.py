@@ -96,6 +96,7 @@ import requests
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 from pydantic import BaseModel
+import jwt
 
 app = FastAPI()
 logger = logging.getLogger(__name__)
@@ -120,12 +121,13 @@ REDIRECT_URI = "http://22.0.0.117:3000/callback"
 
 # Token storage (temporary; ideally, use a secure method for token storage)
 access_token = None
-
+user_data=None
+decoded_token=None
 
 @app.post("/api/token")
 async def exchange_token(request: Request):
     global access_token  # Use global to store the token
-
+    global decoded_token
     try:
         # Extract the 'code' from the request body
         body = await request.json()
@@ -151,14 +153,9 @@ async def exchange_token(request: Request):
         # Send the request to Casdoor for token exchange
         token_response = requests.post(token_url, data=params)
 
-        # Check the response from Casdoor
-        logging.info(f"Received response from Casdoor: Status {token_response.status_code}")
-        logging.info(f"Response content: {token_response.text}")
-
         # If the request was unsuccessful, return an error response
         if token_response.status_code != 200:
             error_data = token_response.json()
-            logging.error(f"Error response from Casdoor: {error_data}")
             return JSONResponse(
                 status_code=400,
                 content={
@@ -170,6 +167,9 @@ async def exchange_token(request: Request):
         # Parse the JSON response from Casdoor to get the access token
         token_data = token_response.json()
         access_token = token_data.get("access_token")
+        decoded_token=jwt.decode(access_token, options={verify_signature:False})
+        
+        
 
         # If no access token is returned, raise an error
         if not access_token:
@@ -189,8 +189,9 @@ async def exchange_token(request: Request):
 @app.get("/api/user-details")
 async def get_user_details(user_id: str ):
     global access_token  # Use the stored token
-    if not access_token:
-        raise HTTPException(status_code=401, detail="Access token is not available. Please authenticate first.")
+    global user_data
+    if not access_token and user_id!=decoded_token.get("id"):
+        raise HTTPException(status_code=401, detail="Access token is not available. Please authenticate first.Something fishy")
 
     try:
         response = requests.get(
@@ -199,13 +200,14 @@ async def get_user_details(user_id: str ):
                 "Authorization": f"Bearer {access_token}",
                 "Content-Type": "application/json",
             },
-            params={"owner": user_id, "name": user_id},  # Pass the user_id as both owner and name
+            params={"owner": decoded_token.get("owner"), "name": decoded_token.get("name")}, 
         )
 
         if response.status_code != 200:
             raise HTTPException(status_code=response.status_code, detail=response.json())
-
-        return JSONResponse(content=response.json())
+        user_data=response
+        users_data=JSONResponse(content=response.json())
+        return users_data
 
     except Exception as e:
         logging.error(f"Error fetching user details: {str(e)}")
@@ -214,15 +216,15 @@ async def get_user_details(user_id: str ):
 
 # Data model for the Generate Keys request payload
 class GenerateKeysPayload(BaseModel):
-    owner: str
-    name: str
+   user_id:str
 
 
 @app.post("/generate-keys")
-async def generate_keys(user_data: dict):
+async def generate_keys(user_id: str):
     global access_token  # Use the stored token
-    if not access_token:
-        raise HTTPException(status_code=401, detail="Access token is not available. Please authenticate first.")
+    global user_data
+    if not (access_token) or (user_id != decoded_token.get("id")):#dont use user_id.get decode the token and check id..
+        raise HTTPException(status_code=401, detail="Access token is not available. Please authenticate first. Something Fishyy")
 
     try:
         # Prepare the payload based on user_data
@@ -365,6 +367,7 @@ async def generate_keys(user_data: dict):
                 "Authorization": f"Bearer {access_token}",
                 "Content-Type": "application/json",
             },
+            params={"owner": decoded_token.get("owner"), "name": decoded_token.get("name")}
         )
 
         if response.status_code != 200:
