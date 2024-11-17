@@ -107,7 +107,7 @@ logging.basicConfig(level=logging.INFO)
 # Allow CORS for your frontend origin
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://22.0.0.117:3000"],  # Frontend domain
+    allow_origins=["http://22.0.0.117:3000" ],  # Frontend domain
     allow_credentials=True,  # Allow cookies
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
@@ -167,7 +167,7 @@ async def exchange_token(request: Request):
         # Parse the JSON response from Casdoor to get the access token
         token_data = token_response.json()
         access_token = token_data.get("access_token")
-        decoded_token=jwt.decode(access_token, options={verify_signature:False})
+        decoded_token=jwt.decode(access_token, options={"verify_signature":False})
         
         
 
@@ -190,17 +190,18 @@ async def exchange_token(request: Request):
 async def get_user_details(user_id: str ):
     global access_token  # Use the stored token
     global user_data
-    if not access_token and user_id!=decoded_token.get("id"):
+    if not access_token or user_id!=decoded_token.get("id"):
         raise HTTPException(status_code=401, detail="Access token is not available. Please authenticate first.Something fishy")
 
     try:
+        param_id=f"{decoded_token.get('owner')}/{decoded_token.get('name')}"
         response = requests.get(
             f"{CASDOOR_API_URL}/get-user",
             headers={
                 "Authorization": f"Bearer {access_token}",
                 "Content-Type": "application/json",
             },
-            params={"owner": decoded_token.get("owner"), "name": decoded_token.get("name")}, 
+            params={"id":param_id}, 
         )
 
         if response.status_code != 200:
@@ -223,10 +224,11 @@ class GenerateKeysPayload(BaseModel):
 async def generate_keys(user_id: str):
     global access_token  # Use the stored token
     global user_data
-    if not (access_token) or (user_id != decoded_token.get("id")):#dont use user_id.get decode the token and check id..
+    if not (access_token) or (user_id != decoded_token.get("id")):
         raise HTTPException(status_code=401, detail="Access token is not available. Please authenticate first. Something Fishyy")
 
     try:
+        param_id=f"{decoded_token.get('owner')/decoded_token.get('name')}"
         # Prepare the payload based on user_data
         casdoor_payload = {
             "owner": user_data.get("owner", ""),
@@ -367,7 +369,7 @@ async def generate_keys(user_id: str):
                 "Authorization": f"Bearer {access_token}",
                 "Content-Type": "application/json",
             },
-            params={"owner": decoded_token.get("owner"), "name": decoded_token.get("name")}
+            params={"id":param_id},
         )
 
         if response.status_code != 200:
