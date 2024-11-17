@@ -258,6 +258,8 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+let accessToken=null;
+import jwtDecode from "jwt-decode";
 
 const CredentialsPage = ({ service }) => {
   const [user, setUser] = useState(null);
@@ -266,8 +268,12 @@ const CredentialsPage = ({ service }) => {
   // Function to fetch user details
   const fetchUserDetails = async () => {
     try {
-      const response = await axios.get("http://22.0.0.117:8000/api/user-details", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
+      accessToken=localStorage.getItem("access_token");
+      const decoded_token= jwtDecode(accessToken);
+      const user_id=decoded_token.id;
+      const response = await axios.get(`http://22.0.0.117:8000/api/user-details?user_id=${user_id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        
       });
       setUser(response.data);
     } catch (error) {
@@ -279,10 +285,12 @@ const CredentialsPage = ({ service }) => {
   const generateKeys = async () => {
     setStatus("Generating keys...");
     try {
+      const decoded_token=jwtDecode(accessToken);
+      const user_id = decoded_token.id
       const response = await axios.post(
-        "http://22.0.0.117:8000/generate-keys",
+        `http://22.0.0.117:8000/generate-keys?user_id=${user_id}`,
         {},
-        { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } }
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       setUser({ ...user, accessKey: response.data.accessKey, accessSecret: response.data.accessSecret });
       setStatus("Keys generated successfully.");
