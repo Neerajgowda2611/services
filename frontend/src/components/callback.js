@@ -30,9 +30,9 @@ const Callback = () => {
         const response = await axios.post('http://22.0.0.117:8000/api/token', {
           code: authCode,
         });
-
+       
         const { access_token } = response.data;
-
+        
         if (access_token) {
           // Set the cookie
           Cookies.set('access_token', access_token, {
