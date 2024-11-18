@@ -27,7 +27,7 @@ const CredentialsPage = ({ service }) => {
       const user_id = decoded_token.id;
 
       // Fetch user details from backend API
-      const response = await axios.get(`http://22.0.0.117:8000/api/user-details?user_id=${user_id}`, {
+      const response = await axios.get(`https://servicesbk.cialabs.org/api/user-details?user_id=${user_id}`, {
         // headers: { Authorization: `Bearer ${accessToken}` },
         withCredentials:true,
       });
@@ -54,7 +54,7 @@ const CredentialsPage = ({ service }) => {
 
       // Send request to generate keys
       const response = await axios.post(
-        `http://22.0.0.117:8000/generate-keys?user_id=${user_id}`,
+        `https://servicesbk.cialabs.org/generate-keys?user_id=${user_id}`,
         {},
         // { headers: { Authorization: `Bearer ${accessToken}` } },
         {

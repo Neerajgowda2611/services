@@ -66,7 +66,6 @@ async def exchange_token(request: Request):
             "redirect_uri": REDIRECT_URI,
         }
 
-        logging.info(f"Sending request to Casdoor with params: {params}")
 
         # Send the request to Casdoor for token exchange
         token_response = requests.post(token_url, data=params)

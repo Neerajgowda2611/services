@@ -22,12 +22,11 @@ const Callback = () => {
       if (!authCode) {
         setError('Authorization code not found');
         console.error('Authorization code not found!');
-        setTimeout(() => navigate('/login'), 3000);
         return;
       }
 
       try {
-        const response = await axios.post('http://22.0.0.117:8000/api/token', {
+        const response = await axios.post('https://servicesbk.cialabs.org/api/token', {
           code: authCode,
         });
        
@@ -43,7 +42,7 @@ const Callback = () => {
           });
           
           // Simply redirect to Nginx - it will check for the cookie
-          window.location.href = 'http://22.0.0.117';
+          window.location.href = 'http://22.0.0.179';
         } else {
           throw new Error('No access token received from the backend');
         }
