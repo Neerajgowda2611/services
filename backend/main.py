@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import logging
 from pydantic import BaseModel
 import jwt
+from dotenv import load_dotenv
+import os
 
 app = FastAPI()
 logger = logging.getLogger(__name__)
@@ -15,22 +17,18 @@ logging.basicConfig(level=logging.INFO)
 # Allow CORS for your frontend origin
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://22.0.0.117:3000","*" ],  # Frontend domain
+    allow_origins=["https://services.cialabs.org","*" ],  # Frontend domain
     allow_credentials=True,  # Allow cookies
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
 )
 
 # Casdoor Configuration
-CASDOOR_API_URL = "https://authtest.cialabs.org/api"
-CLIENT_ID = "931cbff5298aef218fd0"
-CLIENT_SECRET = "31f07306354c22c3a4782e1e5057e0545e54abc8"
-REDIRECT_URI = "http://22.0.0.117:3000/callback"
-
-# Token storage (temporary; ideally, use a secure method for token storage)
-# access_token = None
-# user_data=None
-# decoded_token=None
+load_dotenv()
+CASDOOR_API_URL = os.getenv("CASDOOR_API_URL")
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+REDIRECT_URI = os.getenv("REDIRECT_URI")
 
 def get_access_token(request: Request):
     access_token = request.cookies.get("access_token")
@@ -198,15 +196,6 @@ async def generate_keys(user_id: str, request: Request):
 
         # Parse user data from Casdoor response
         user_data = response.json()
-        print(user_data)
-        a=user_data.get('data', {}).get('owner', 'default_owner')
-        b=user_data.get("owner")
-        c=user_data.get("owner")
-        d=user_data.get("owner")
-
-        print(a,b,c,d)
-
-        # print(user_data)
         
         # Prepare payload for Casdoor API call to generate keys
         casdoor_payload = {
